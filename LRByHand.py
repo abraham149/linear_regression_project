@@ -1,13 +1,14 @@
+import numpy as np
 
 
 class LinearRegressionByHand():
-    def __init__(self, learning_rate = 0.001, iterations = 1000):
+    def __init__(self, learning_rate = 0.001, iterations = 100000):
         self.learning_rate = learning_rate
         self.iterations = iterations
         
     def compute_loss(self, y, y_true):
         loss = np.sum( (y - y_true)**2  )
-        return loss/(2*y.shape[0])
+        return loss / ( 2 * self.n )
     
     def predict(self, X):  #returns y = b + p1x1 + p2x2 + ... + pnxn
         y = self.b + X @ self.W
@@ -22,21 +23,16 @@ class LinearRegressionByHand():
         self.W = self.W - self.learning_rate * np.reshape(dW, (self.n, 1))
         self.b = self.b - self.learning_rate * db
 
-    def fit(self, x_train, y_train):
-        y_train = y_train.values.reshape(-1,1)
-        self.m, self.n = x_train.shape # m is # of rows. n is # of features
-        self.W = np.random.randn(self.n, 1) # params
+    def fit(self, X, y):
+        y = y.values.reshape(-1,1)
+        self.m, self.n = X.shape # m is # of rows. n is # of features
+        self.W = np.random.randn(self.n, 1) # init random params
         self.b = np.random.randn() # bias
-        losses = []
-        for i in range(self.iterations):
-            y_hat = self.predict(x_train)
-            loss = self.compute_loss(y_hat, y_train)
-            
-            dW, db = self.gd(x_train, y_train, y_hat) 
-            
+        self.losses = []
+        for _ in range(self.iterations):
+            y_hat = self.predict(X)
+            loss = self.compute_loss(y_hat, y)
+            self.losses.append(loss)
+            dW, db = self.gd(X, y, y_hat) 
             self.update_params(dW, db)
-            
-            losses.append(loss)
-            if i % int(self.iterations/10) == 0:
-                print('Iter: {}, Current loss: {:.4f}'.format(i, loss))
-        return self
+        return self.losses
