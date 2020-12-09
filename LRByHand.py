@@ -1,3 +1,11 @@
+
+"""
+Author: Abraham Lemus Ruiz
+Last change: 7pm 8/12/2020
+linkedin: https://www.linkedin.com/in/abraham-lemus-ruiz/
+"""
+
+
 import numpy as np
 
 

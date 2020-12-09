@@ -1,3 +1,10 @@
+"""
+Author: Abraham Lemus Ruiz
+Last change: 7pm 8/12/2020
+linkedin: https://www.linkedin.com/in/abraham-lemus-ruiz/
+"""
+
+
 import requests
 import pandas as pd
 import numpy as np
@@ -108,7 +115,7 @@ r2, mse = r2_score(y_test, y_pred), mean_squared_error(y_test, y_pred)
 
 print('r2 : {}'.format( r2 ))
 print('mse: {}'.format( mse ))
-print(losses)
+#print(losses)
 
 #Testing deployed model
 id = 1234   #selecting student
